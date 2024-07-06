@@ -86,11 +86,27 @@ function handleAddTask(event){
 
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event){
-
+    let taskId = $(this).attr("data-task-id");
+    // Filter the taskList array to exclude the task with the matching id
+    taskList = taskList.filter(task => task.id != taskId); // Determine if each task should be included in the new array.
+    // Update taskList in localStorage
+    localStorage.setItem("tasks", JSON.stringify(taskList));
+    // Render the task list
+    renderTaskList();
 }
 
 // Todo: create a function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {
+    let taskId = ui.draggable.attr("data-task-id");
+    let newStatus = $(this).attr("data-status");
+    // Find the task with the matching id
+    let task = taskList.find(task => task.id == taskId);
+    // Update the task's status
+    task.status = newStatus;
+    // Update taskList in localStorage
+    localStorage.setItem("tasks", JSON.stringify(taskList));
+    // Render the task list
+    renderTaskList();
 
 }
 
