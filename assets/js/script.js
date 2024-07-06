@@ -28,7 +28,32 @@ function createTaskCard(task) {
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
+// Clear the existing task cards from each column
+$("#todo-cards").empty();
+$("#in-progress-cards").empty();
+$("#done-cards").empty();
 
+// Loop through the taskList array
+for (let i = 0; i < taskList.length; i++) {
+    let task = taskList[i];
+    let taskCard = createTaskCard(task);
+    // Append the task card to the appropriate column
+    if (task.status === "To Do") {
+        $("#todo-cards").append(taskCard);
+    } else if (task.status === "In Progress") {
+        $("#in-progress-cards").append(taskCard);
+    } else if (task.status === "Done") {
+        $("#done-cards").append(taskCard);
+    }
+}
+// Make task cards draggable
+// Reference: https://jqueryui.com/draggable/#cursor-style 
+$(".card").draggable({
+    revert: "invalid",
+    helper: "clone",
+    cursor: "move", cursorAt: { top: 56, left: 56 },
+    containment: ".container",
+});
 }
 
 // Todo: create a function to handle adding a new task
