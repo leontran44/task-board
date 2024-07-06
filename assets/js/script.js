@@ -87,8 +87,8 @@ function handleAddTask(event){
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event){
     let taskId = $(this).attr("data-task-id");
-    // Filter the taskList array to remove the task with the specified id
-    taskList = taskList.filter((task) => task.id !== parseInt(taskId)); // Determine if the task should be included in the new array
+    // Filter the taskList array to exclude the task with the matching id
+    taskList = taskList.filter(task => task.id != taskId); // Determine if each task should be included in the new array.
     // Update taskList in localStorage
     localStorage.setItem("tasks", JSON.stringify(taskList));
     // Render the task list
