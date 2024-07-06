@@ -58,7 +58,30 @@ $(".card").draggable({
 
 // Todo: create a function to handle adding a new task
 function handleAddTask(event){
+    event.preventDefault();
+    // Retrieve form data
+    let taskTitle = $("#taskTitle").val();
+    let taskDescription = $("#taskDescription").val();
+    let taskDueDate = $("#taskDueDate").val();
+    // Create new task object
+    let newTask = {
+        id: generateTaskId(),
+        title: taskTitle,
+        description: taskDescription,
+        dueDate: taskDueDate,
+        status: "To Do",
+    };
+    // Add new task to taskList array
+    taskList.push(newTask);
+    // Update taskList in localStorage
+    localStorage.setItem("tasks", JSON.stringify(taskList));
+    localStorage.setItem("nextId", JSON.stringify(nextId));
 
+    // Render the task list
+    renderTaskList();
+    // Reset the form and close modal
+    $("#taskForm").trigger("reset");
+    $("#formModal").modal("hide");
 }
 
 // Todo: create a function to handle deleting a task
