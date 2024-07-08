@@ -11,12 +11,25 @@ localStorage.setItem("nextId", JSON.stringify(nextId)); // Update nextId in loca
 return nextId;
 }
 
+function getBackgroundColor(dueDate) {
+    const now = dayjs();
+    const due = dayjs(dueDate);
+    if (due.isBefore(now, 'day')) {
+        return 'bg-danger'; // red for past due
+    } else if (due.isSame(now, 'day')) {
+        return 'bg-warning'; // yellow for due today
+    } else {
+        return 'bg-success'; // green for future due date
+    }
+}
+
 function createTaskCard(task) {
-    let taskCard = $("<div>").addClass("card mb-3").attr("id", task.id);
+    let backgroundColorClass = getBackgroundColor(task.dueDate);
+    let taskCard = $("<div>").addClass(`card mb-3 ${backgroundColorClass}`).attr("id", task.id);
     let cardBody = $("<div>").addClass("card-body");
     let cardTitle = $("<h5>").addClass("card-title").text(task.title);
-    let cardText = $("<p>").addClass("card-text").text(task.description);
-    let cardDueDate = $("<p>").addClass("card-text text-muted").text(`Due: ${task.dueDate}`);
+    let cardText = $("<p>").addClass("card-text text-dark").text(task.description);
+    let cardDueDate = $("<p>").addClass("card-text").text(`Due: ${dayjs(task.dueDate).format('MMM D, YYYY')}`);
 
     let deleteButton = $("<button>")
     .addClass("btn btn-danger")
